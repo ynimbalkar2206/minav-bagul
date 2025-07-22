@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wallet - INRIX.MINING</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .glow-blue {
+      box-shadow: 0 0 10px #00ffff, 0 0 25px #00ffff;
+    }
+  </style>
+</head>
+<body class="bg-black text-white font-sans min-h-screen">
+
+  <!-- Header -->
+  <header class="text-center p-4 border-b border-cyan-800">
+    <h1 class="text-cyan-400 text-2xl font-bold tracking-wide">MINE CASHY</h1>
+  </header>
+
+  <main class="p-4 flex flex-col gap-4">
+
+    <!-- Mining Balance Card -->
+    <div class="bg-[#111] rounded-xl border border-cyan-700 p-4">
+      <div class="flex justify-between items-center mb-1">
+        <p class="text-sm text-cyan-300 font-semibold flex items-center gap-1">
+          💳 MINING BALANCE:
+        </p>
+        <button onclick="loadWallet()" class="text-cyan-400 text-lg">⟳</button>
+      </div>
+      <p id="mining-balance" class="text-2xl font-bold text-cyan-400">₹0.000000</p>
+    </div>
+
+    <!-- Referral Balance Card -->
+    <div class="bg-[#111] rounded-xl border border-cyan-700 p-4">
+      <div class="flex justify-between items-center mb-1">
+        <p class="text-sm text-cyan-300 font-semibold flex items-center gap-1">
+          👥 REFERRAL BALANCE:
+        </p>
+        <button class="text-cyan-400 text-lg">⟳</button>
+      </div>
+      <p class="text-2xl font-bold text-cyan-400">₹0.000000</p>
+    </div>
+
+    <!-- Withdraw Funds Section -->
+    <div class="bg-[#111] rounded-xl border border-cyan-700 p-4">
+      <p class="text-cyan-300 font-semibold mb-2 flex items-center gap-2">
+        ⬇ WITHDRAW FUNDS
+      </p>
+      <p class="text-sm text-gray-400 mb-4">Securely withdraw your Mining and Referral balances.</p>
+
+      <button class="w-full bg-cyan-500 text-black font-semibold px-4 py-2 rounded-xl mb-2 glow-blue hover:bg-cyan-400 transition">
+        ⬇ Withdraw Mining
+      </button>
+      <button class="w-full bg-cyan-500 text-black font-semibold px-4 py-2 rounded-xl glow-blue hover:bg-cyan-400 transition">
+        ⬇ Withdraw Referral
+      </button>
+    </div>
+
+    <!-- Transaction History Section -->
+    <div class="bg-[#111] rounded-xl border border-cyan-700 p-4">
+      <p class="text-cyan-300 font-semibold mb-4 flex items-center gap-2">
+        📄 TRANSACTION HISTORY
+        <button onclick="loadTransactions()" class="ml-auto text-cyan-400">⟳</button>
+      </p>
+
+      <!-- Transactions List -->
+      <div id="transaction-list" class="text-sm text-gray-300 space-y-2">
+        <!-- JS will insert transactions here -->
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Bottom Navigation -->
+  <footer class="fixed bottom-0 w-full z-50 bg-[#0d0d1a] p-3">
+    <div class="flex justify-around items-center text-cyan-400 text-2xl">
+
+      <!-- Wallet Button (Left) -->
+      <a href="wallet.html" class="flex flex-col items-center text-cyan-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h14a2 2 0 012 2v2H3V7zm0 4h18v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6zm13 2a1 1 0 100 2 1 1 0 000-2z" />
+        </svg>
+      </a>
+
+      <!-- Home Button (Center) -->
+      <a href="index.html" class="flex flex-col items-center hover:text-cyan-300 transition">
+        <div class="bg-cyan-500 p-2 rounded-full shadow-lg shadow-cyan-400/50">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9.75L12 3l9 6.75V21a1.5 1.5 0 01-1.5 1.5H4.5A1.5 1.5 0 013 21V9.75z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 22V12h6v10" />
+          </svg>
+        </div>
+      </a>
+
+      <!-- Profile Button (Right) -->
+      <!-- Profile Button (now opens referral.html) -->
+<a href="referral.html" class="flex flex-col items-center hover:text-cyan-300 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 drop-shadow-neon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5.121 17.804A9.953 9.953 0 0112 15c2.216 0 4.264.722 5.879 1.936M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 22c-5.523 0-10-4.477-10-10S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+        </svg>
+      </a>
+
+    </div>
+  </footer>
+
+  <script>
+    function loadWallet() {
+      const balance = parseFloat(localStorage.getItem('walletBalance') || '0').toFixed(6);
+      document.getElementById('mining-balance').textContent = `₹${balance}`;
+    }
+
+    function loadTransactions() {
+      const container = document.getElementById('transaction-list');
+      container.innerHTML = '';
+
+      const transactions = JSON.parse(localStorage.getItem('transactions') || '[]');
+      if (transactions.length === 0) {
+        container.innerHTML = '<p class="text-gray-400">No transactions yet.</p>';
+        return;
+      }
+
+      transactions.reverse().forEach(tx => {
+        const time = new Date(tx.time).toLocaleString();
+        const item = document.createElement('div');
+        item.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span>${tx.type}</span>
+            <span class="text-cyan-400 font-bold">+₹${parseFloat(tx.amount).toFixed(6)}</span>
+          </div>
+          <div class="text-xs text-gray-500">${time}</div>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    // Load data on page load
+    window.onload = function () {
+      loadWallet();
+      loadTransactions();
+    };
+  </script>
+  
+
+</body>
+</html>
